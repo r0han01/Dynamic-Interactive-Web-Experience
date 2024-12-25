@@ -3,7 +3,7 @@ name: Flask Application CI/CD
 on:
    push:
      branches:
-       - main
+       - fake
 
 jobs:
   push_to_registry:

@@ -4,10 +4,10 @@ version: 2.1
 executors:
   docker-publisher: 
     environment:
-      IMAGE_NAME: ndukwearm19docker/docker-node-app
+      IMAGE_NAME: docker.io/r0han01/circleci
     docker: # Each job requires specifying an executor
     # (either docker, macos, or machine), see
-      - image: docker.io/r0han01/circleci:latest
+      - image: circleci/node:latest
         auth:
             username: $DOCKERHUB_USERNAME
             password: $DOCKERHUB_PASSWORD
