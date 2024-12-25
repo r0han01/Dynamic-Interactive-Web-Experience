@@ -1,4 +1,4 @@
-# Dynamic Interactive Web Experience
+# Automated Continuous Integration and Deployment of Flask Application with CircleCI and Docker
 
 This project is a dynamic Flask-based web application designed to display a dashboard with real-time status, charts, and tables. It uses CircleCI for Continuous Integration (CI) and Continuous Deployment (CD), Docker for containerization, and AWS EC2 for hosting.
 
@@ -192,3 +192,17 @@ curl -X POST https://api.github.com/repos/${GITHUB_REPOSITORY}/dispatches \
 ### Useful Links 
 - https://stackoverflow.com/questions/68147899/whats-is-the-difference-between-repository-dispatch-and-workflow-dispatch-in-git
 - https://github.com/armstrong99/circleci-docker-CICD-pipeline-NodeJS/blob/main/.circleci/config.yml
+
+# File Structure
+```
+/Dynamic-Interactive-Web-Experience
+├── app.py                  # Main Flask app file
+├── Dockerfile              # Dockerfile for containerization
+├── requirements.txt        # Python dependencies
+├── templates/              # HTML templates
+├── venv/                   # Python virtual environment (if used)
+└── .github/                # GitHub Actions CI/CD workflow
+    └── workflows/          # Workflow definition for GitHub Actions
+        └── main.yml        # CI/CD pipeline configuration
+```
+
