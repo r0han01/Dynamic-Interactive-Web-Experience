@@ -1,48 +1,42 @@
 orbs:
   docker: circleci/docker@1.5.0
+
 version: 2.1
+
 executors:
-  docker-publisher: 
+  docker-publisher:
     environment:
       IMAGE_NAME: docker.io/r0han01/circleci
-    docker: # Each job requires specifying an executor
-    # (either docker, macos, or machine), see
+      GITHUB_REPOSITORY: r0han01/Dynamic-Interactive-Web-Experience  # Define the GitHub repository
+    docker:
       - image: circleci/node:latest
         auth:
-            username: $DOCKERHUB_USERNAME
-            password: $DOCKERHUB_PASSWORD
+          username: $DOCKERHUB_USERNAME
+          password: $DOCKERHUB_PASSWORD
 
 jobs:
-    publishLatestToHub: 
-      executor: docker-publisher
- 
-      steps: 
-        - checkout
-        - setup_remote_docker
-        - run: 
-            name: Publish Docker Image to Docker Hub
-            command: |
-              echo "$DOCKERHUB_PASSWORD" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
-              docker build -t $IMAGE_NAME .
-              docker push $IMAGE_NAME:latest
+  publishLatestToHub:
+    executor: docker-publisher
+
+    steps:
+      - checkout
+      - setup_remote_docker
+      - run:
+          name: Publish Docker Image to Docker Hub
+          command: |
+            echo "$DOCKERHUB_PASSWORD" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
+            docker build -t $IMAGE_NAME .
+            docker push $IMAGE_NAME:latest
+      - run:
+          name: Trigger GitHub Actions workflow
+          command: |
+            curl -X POST https://api.github.com/repos/${GITHUB_REPOSITORY}/dispatches \
+            -H "Accept: application/vnd.github.v3+json" \
+            -H "Authorization: token $GITHUB_TOKEN" \
+            -d '{"event_type": "docker_push"}'
 
 workflows:
   version: 2
   build-master:
     jobs:
-       - publishLatestToHub
-          
-                
-                 
-             
-    
-       
-      
-
-
-    
-           
-   
-    
-
-    
+      - publishLatestToHub
