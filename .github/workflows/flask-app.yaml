@@ -1,13 +1,12 @@
 name: Flask Application CI/CD
 
 on:
-   push:
-     branches:
-       - fake
+  repository_dispatch:
+    types: [docker_push]  # Custom event type triggered by Docker Hub push
 
 jobs:
   push_to_registry:
-    name: Push Docker image to Docker Hub
+    name: Handle Docker Image After Push
     runs-on: ubuntu-latest
     permissions:
       packages: write
